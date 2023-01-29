@@ -1,6 +1,6 @@
 <div class="page-header">
   <div class="container" style="margin-top: 2em">
-    <h1>View employee</h1>
+    <h1>{{ header }}</h1>
   </div>
 </div>
 
@@ -149,8 +149,7 @@
         </div>
         <div class="row">
           <div class="col-xs-12">
-            <!-- <div class="row between-xs" *ngIf="!isNewEmployee"> -->
-            <div class="row between-xs">
+            <div class="row between-xs" *ngIf="!isNewEmployee">
               <button mat-raised-button color="primary" (click)="onUpdate()">
                 Save
               </button>
@@ -158,11 +157,11 @@
                 Delete
               </button>
             </div>
-            <!-- <div class="row between-xs" *ngIf="isNewEmployee">
+            <div class="row between-xs" *ngIf="isNewEmployee">
               <button mat-raised-button color="primary" (click)="onAdd()">
                 Add
               </button>
-            </div> -->
+            </div>
           </div>
         </div>
       </form>

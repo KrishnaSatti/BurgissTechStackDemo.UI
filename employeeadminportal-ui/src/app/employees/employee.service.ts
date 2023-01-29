@@ -48,4 +48,21 @@ export class EmployeeService {
       this.baseApiUrl + '/employees/' + studentId
     );
   }
+
+  addEmployee(employeeRequest: Employee): Observable<Employee> {
+    const addEmployeeRequest: UpdateEmployeeRequest = {
+      firstName: employeeRequest.firstName,
+      lastName: employeeRequest.lastName,
+      dateOfBirth: employeeRequest.dateOfBirth,
+      email: employeeRequest.email,
+      mobile: employeeRequest.mobile,
+      genderId: employeeRequest.genderId,
+      physicalAddress: employeeRequest.address.physicalAddress,
+      postalAddress: employeeRequest.address.postalAddress,
+    };
+    return this.httpClient.post<Employee>(
+      this.baseApiUrl + '/employees/add',
+      addEmployeeRequest
+    );
+  }
 }

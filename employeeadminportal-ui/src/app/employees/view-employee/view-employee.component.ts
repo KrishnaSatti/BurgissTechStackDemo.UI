@@ -33,6 +33,9 @@ export class ViewEmployeeComponent {
     },
   };
 
+  isNewEmployee = false;
+  header = '';
+
   genderList: Gender[] = [];
 
   constructor(
@@ -47,11 +50,18 @@ export class ViewEmployeeComponent {
     this.route.paramMap.subscribe((params) => {
       this.employeeId = params.get('id');
       if (this.employeeId) {
-        this.employeeService
-          .getEmployee(this.employeeId)
-          .subscribe((successResponse) => {
-            this.employee = successResponse;
-          });
+        if (this.employeeId.toLowerCase() === 'Add'.toLowerCase()) {
+          this.isNewEmployee = true;
+          this.header = 'Add New Student';
+        } else {
+          this.isNewEmployee = false;
+          this.header = 'Edit Student';
+          this.employeeService
+            .getEmployee(this.employeeId)
+            .subscribe((successResponse) => {
+              this.employee = successResponse;
+            });
+        }
 
         this.genderService.getGenderList().subscribe((successResponse) => {
           this.genderList = successResponse;
@@ -66,7 +76,7 @@ export class ViewEmployeeComponent {
       .subscribe(
         (successResponse) => {
           this.snackbar.open('Employee Updated Successfully', undefined, {
-            duration: 3000,
+            duration: 5000,
           });
         },
         (errorResponse) => {
@@ -78,17 +88,26 @@ export class ViewEmployeeComponent {
   onDelete(): void {
     this.employeeService.deleteStudent(this.employee.id).subscribe(
       (successResponse) => {
-        this.snackbar.open('Employee Deleted successfully', undefined, {
-          duration: 2000,
+        this.router.navigateByUrl('employees');
+        this.snackbar.open('Employee Deleted Successfully', undefined, {
+          duration: 5000,
         });
-
-        setTimeout(() => {
-          this.router.navigateByUrl('students');
-        }, 1000);
       },
       (errorResponse) => {
         console.log(errorResponse);
       }
+    );
+  }
+
+  onAdd(): void {
+    this.employeeService.addEmployee(this.employee).subscribe(
+      (successResponse) => {
+        this.router.navigateByUrl('employees');
+        this.snackbar.open('Employee Added Successfully', undefined, {
+          duration: 5000,
+        });
+      },
+      (errorResponse) => {}
     );
   }
 }
