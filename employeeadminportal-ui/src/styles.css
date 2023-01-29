@@ -26,3 +26,7 @@ body {
 .mt-1 {
   margin-top: 1em !important;
 }
+
+.mat-mdc-snack-bar-label {
+  text-align: center;
+}
