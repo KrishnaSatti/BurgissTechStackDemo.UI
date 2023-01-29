@@ -28,7 +28,6 @@ export class EmployeesComponent implements OnInit {
 
   constructor(private employeeService: EmployeeService) {}
   ngOnInit(): void {
-    // Fetc hStudents
     this.employeeService.getEmployees().subscribe(
       (successResponse) => {
         this.employees = successResponse;
@@ -48,7 +47,7 @@ export class EmployeesComponent implements OnInit {
     );
   }
 
-  filterStudents() {
+  filterEmployees() {
     this.dataSource.filter = this.filterString.trim().toLowerCase();
   }
 }

@@ -43,9 +43,9 @@ export class EmployeeService {
     );
   }
 
-  deleteStudent(studentId: string): Observable<Employee> {
+  deleteEmployee(employeeId: string): Observable<Employee> {
     return this.httpClient.delete<Employee>(
-      this.baseApiUrl + '/employees/' + studentId
+      this.baseApiUrl + '/employees/' + employeeId
     );
   }
 
@@ -64,5 +64,22 @@ export class EmployeeService {
       this.baseApiUrl + '/employees/add',
       addEmployeeRequest
     );
+  }
+
+  uploadImage(employeeId: string, file: File): Observable<any> {
+    const formData = new FormData();
+    formData.append('profileImage', file);
+
+    return this.httpClient.post(
+      this.baseApiUrl + '/employees/' + employeeId + '/upload-image',
+      formData,
+      {
+        responseType: 'text',
+      }
+    );
+  }
+
+  getImagePath(relativePath: string) {
+    return `${this.baseApiUrl}/${relativePath}`;
   }
 }

@@ -32,6 +32,7 @@ export class ViewEmployeeComponent {
       postalAddress: '',
     },
   };
+  displayProfileImageUrl = '';
 
   isNewEmployee = false;
   header = '';
@@ -49,18 +50,26 @@ export class ViewEmployeeComponent {
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
       this.employeeId = params.get('id');
+
       if (this.employeeId) {
         if (this.employeeId.toLowerCase() === 'Add'.toLowerCase()) {
+          // -> new Student Functionality
           this.isNewEmployee = true;
           this.header = 'Add New Student';
+          this.setImage();
         } else {
+          // -> Existing Student Functionality
           this.isNewEmployee = false;
           this.header = 'Edit Student';
-          this.employeeService
-            .getEmployee(this.employeeId)
-            .subscribe((successResponse) => {
+          this.employeeService.getEmployee(this.employeeId).subscribe(
+            (successResponse) => {
               this.employee = successResponse;
-            });
+              this.setImage();
+            },
+            (errorResponse) => {
+              this.setImage();
+            }
+          );
         }
 
         this.genderService.getGenderList().subscribe((successResponse) => {
@@ -86,7 +95,7 @@ export class ViewEmployeeComponent {
   }
 
   onDelete(): void {
-    this.employeeService.deleteStudent(this.employee.id).subscribe(
+    this.employeeService.deleteEmployee(this.employee.id).subscribe(
       (successResponse) => {
         this.router.navigateByUrl('employees');
         this.snackbar.open('Employee Deleted Successfully', undefined, {
@@ -109,5 +118,36 @@ export class ViewEmployeeComponent {
       },
       (errorResponse) => {}
     );
+  }
+
+  uploadImage(event: any): void {
+    if (this.employeeId) {
+      const file: File = event.target.files[0];
+      this.employeeService.uploadImage(this.employee.id, file).subscribe(
+        (successResponse) => {
+          this.employee.profileImageUrl = successResponse;
+          this.setImage();
+
+          // Show a notification
+          this.snackbar.open('Profile Image Updated', undefined, {
+            duration: 2000,
+          });
+        },
+        (errorResponse) => {
+          console.log(errorResponse);
+        }
+      );
+    }
+  }
+
+  private setImage(): void {
+    if (this.employee.profileImageUrl) {
+      this.displayProfileImageUrl = this.employeeService.getImagePath(
+        this.employee.profileImageUrl
+      );
+    } else {
+      // Display a default
+      this.displayProfileImageUrl = '/assets/user.png';
+    }
   }
 }
