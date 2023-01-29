@@ -1,10 +1,11 @@
-import { Component, ComponentRef } from '@angular/core';
+import { Component, ComponentRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Employee } from 'src/app/models/ui-models/employee.model';
 import { GenderService } from 'src/app/services/gender.service';
 import { EmployeeService } from '../employee.service';
 import { Gender } from 'src/app/models/ui-models/gender.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-view-employee',
@@ -38,6 +39,8 @@ export class ViewEmployeeComponent {
   header = '';
 
   genderList: Gender[] = [];
+
+  @ViewChild('employeeDetailsForm') employeeDetailsForm?: NgForm;
 
   constructor(
     private readonly employeeService: EmployeeService,
@@ -109,15 +112,19 @@ export class ViewEmployeeComponent {
   }
 
   onAdd(): void {
-    this.employeeService.addEmployee(this.employee).subscribe(
-      (successResponse) => {
-        this.router.navigateByUrl('employees');
-        this.snackbar.open('Employee Added Successfully', undefined, {
-          duration: 5000,
-        });
-      },
-      (errorResponse) => {}
-    );
+    if (this.employeeDetailsForm?.form.valid) {
+      this.employeeService.addEmployee(this.employee).subscribe(
+        (successResponse) => {
+          this.router.navigateByUrl('employees');
+          this.snackbar.open('Employee Added Successfully', undefined, {
+            duration: 5000,
+          });
+        },
+        (errorResponse) => {
+          console.log(errorResponse);
+        }
+      );
+    }
   }
 
   uploadImage(event: any): void {
