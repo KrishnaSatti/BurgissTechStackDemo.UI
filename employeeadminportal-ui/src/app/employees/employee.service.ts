@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { Employee } from '../models/api-models/employee.model';
 import { UpdateEmployeeRequest } from '../models/api-models/update-employee-request.model';
 
@@ -8,7 +9,7 @@ import { UpdateEmployeeRequest } from '../models/api-models/update-employee-requ
   providedIn: 'root',
 })
 export class EmployeeService {
-  private baseApiUrl = 'https://localhost:44363';
+  private baseApiUrl = environment.baseApiUrl;
 
   constructor(private httpClient: HttpClient) {}
 
@@ -33,6 +34,7 @@ export class EmployeeService {
       email: employeeRequest.email,
       mobile: employeeRequest.mobile,
       genderId: employeeRequest.genderId,
+      departmentId: employeeRequest.departmentId,
       physicalAddress: employeeRequest.address.physicalAddress,
       postalAddress: employeeRequest.address.postalAddress,
     };
@@ -57,6 +59,7 @@ export class EmployeeService {
       email: employeeRequest.email,
       mobile: employeeRequest.mobile,
       genderId: employeeRequest.genderId,
+      departmentId: employeeRequest.departmentId,
       physicalAddress: employeeRequest.address.physicalAddress,
       postalAddress: employeeRequest.address.postalAddress,
     };

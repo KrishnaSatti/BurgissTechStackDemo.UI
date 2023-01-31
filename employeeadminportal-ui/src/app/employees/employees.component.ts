@@ -17,6 +17,7 @@ export class EmployeesComponent implements OnInit {
     'lastName',
     'dateOfBirth',
     'email',
+    'department',
     'mobile',
     'gender',
     'edit',

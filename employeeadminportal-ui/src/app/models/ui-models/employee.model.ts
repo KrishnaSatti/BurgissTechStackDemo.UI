@@ -1,4 +1,5 @@
 import { Address } from './address.model';
+import { Department } from './department.model';
 import { Gender } from './gender.model';
 
 export interface Employee {
@@ -11,5 +12,7 @@ export interface Employee {
   profileImageUrl: string;
   genderId: string;
   gender: Gender;
+  departmentId: string;
+  department: Department;
   address: Address;
 }

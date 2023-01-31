@@ -52,10 +52,25 @@ import { EmployeesComponent } from './employees/employees.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { ViewEmployeeComponent } from './employees/view-employee/view-employee.component';
+import { ChartComponent } from './chart/chart.component';
+import { NgChartsModule } from 'ng2-charts';
+
+export const routes = [
+  { path: 'accounts', component: ViewEmployeeComponent, label: 'Accounts' },
+  // { path: 'contacts', component: ContactsComponent, label: 'Contacts' },
+  // { path: 'activities', component: ActivitiesComponent, label: 'Activities' }
+];
 
 @NgModule({
-  declarations: [AppComponent, TopNavComponent, EmployeesComponent, ViewEmployeeComponent],
+  declarations: [
+    AppComponent,
+    TopNavComponent,
+    EmployeesComponent,
+    ViewEmployeeComponent,
+    ChartComponent,
+  ],
   imports: [
+    NgChartsModule,
     FormsModule,
     BrowserModule,
     AppRoutingModule,

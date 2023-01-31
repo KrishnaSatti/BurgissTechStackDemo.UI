@@ -1,13 +1,25 @@
 <mat-toolbar color="primary">
-  <div class="container">
-    <a routerLink="/" class="ml-1">
+  <div>
+    <a
+      href="https://github.com/KrishnaSatti/BurgissTechStackDemo.UI"
+      style="text-decoration: none"
+      target="_blank"
+    >
       <button mat-raised-button style="font-size: large" color="accent">
-        Home
+        <mat-icon>code</mat-icon>
+        GitHub Source Code
       </button>
     </a>
-    <a routerLink="/employees" class="ml-1">
+    <a routerLink="/employees" style="text-decoration: none">
       <button mat-raised-button style="font-size: large" color="accent">
-        Primary
+        <mat-icon>person</mat-icon>
+        Employees
+      </button>
+    </a>
+    <a routerLink="/chart" style="text-decoration: none">
+      <button mat-raised-button style="font-size: large" color="accent">
+        <mat-icon>bar_chart</mat-icon>
+        Department Costs
       </button>
     </a>
   </div>

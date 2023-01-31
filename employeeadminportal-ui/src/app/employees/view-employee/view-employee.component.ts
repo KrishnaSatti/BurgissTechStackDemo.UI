@@ -2,8 +2,10 @@ import { Component, ComponentRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Employee } from 'src/app/models/ui-models/employee.model';
 import { GenderService } from 'src/app/services/gender.service';
+import { DepartmentService } from 'src/app/services/department.service';
 import { EmployeeService } from '../employee.service';
 import { Gender } from 'src/app/models/ui-models/gender.model';
+import { Department } from 'src/app/models/ui-models/department.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NgForm } from '@angular/forms';
 
@@ -27,6 +29,11 @@ export class ViewEmployeeComponent {
       id: '',
       description: '',
     },
+    departmentId: '',
+    department: {
+      id: '',
+      description: '',
+    },
     address: {
       id: '',
       physicalAddress: '',
@@ -39,6 +46,7 @@ export class ViewEmployeeComponent {
   header = '';
 
   genderList: Gender[] = [];
+  departmentList: Department[] = [];
 
   @ViewChild('employeeDetailsForm') employeeDetailsForm?: NgForm;
 
@@ -46,6 +54,7 @@ export class ViewEmployeeComponent {
     private readonly employeeService: EmployeeService,
     private readonly route: ActivatedRoute,
     private readonly genderService: GenderService,
+    private readonly departmentService: DepartmentService,
     private snackbar: MatSnackBar,
     private router: Router
   ) {}
@@ -78,6 +87,12 @@ export class ViewEmployeeComponent {
         this.genderService.getGenderList().subscribe((successResponse) => {
           this.genderList = successResponse;
         });
+
+        this.departmentService
+          .getDepartmentList()
+          .subscribe((successResponse) => {
+            this.departmentList = successResponse;
+          });
       }
     });
   }
@@ -148,6 +163,7 @@ export class ViewEmployeeComponent {
   }
 
   private setImage(): void {
+    console.log(this.employee.profileImageUrl);
     if (this.employee.profileImageUrl) {
       this.displayProfileImageUrl = this.employeeService.getImagePath(
         this.employee.profileImageUrl
